@@ -19,7 +19,8 @@ namespace Emulator
         TLBEntry() : vpn(0), ppn(0), lruSeq(0) {}
         TLBEntry(Addr vpn, Addr ppn, uint16_t asid, uint64_t lruSeq, bool valid)
             : vpn(vpn), ppn(ppn), asid(asid), lruSeq(lruSeq), valid(valid)
-        {}
+        {
+        }
 
     } * TLBEntryPtr; // TLB entry struct pointer.
 
@@ -28,7 +29,6 @@ namespace Emulator
      */
     class BaseTLB : public Trace::TraceObject
     {
-        BaseDRAM *m_dram;
         Processor *m_Processor;
 
     public:
@@ -38,8 +38,6 @@ namespace Emulator
          * @param way of set-associative.
          **/
         BaseTLB(Processor *processor, uint16_t entry_num = 64, uint8_t way = 1);
-
-        BaseTLB();
 
         ~BaseTLB();
 
@@ -115,26 +113,24 @@ namespace Emulator
 
         /**
          * @brief API - Look up the physical address, only SV39 now.
-         * 
+         *
          * @param vaddr virtual address.
          * @param asid address space ID.
          * @param paddr pointer to physical address write to.
-         * 
+         *
          * @return bool true if look up hit.
          */
         bool TLB_LookUp(Addr vaddr, uint16_t asid, Addr *paddr);
 
         /**
          * @brief API - Insert a new TLB entry
-         * 
+         *
          * @param vaddr virtual address.
          * @param asid address space ID.
          * @param paddr physical address.
-         * 
+         *
          * @return bool true if insert successfully.
          */
         bool TLB_Insert(Addr vaddr, uint16_t asid, Addr paddr);
     };
 }
-
-#endif

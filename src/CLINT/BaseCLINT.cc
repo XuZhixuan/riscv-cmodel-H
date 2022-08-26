@@ -22,7 +22,7 @@ void BaseCLINT::Init(const YAML::Node& Config){
   m_MtimeTickPeriodType   = CLINT_cfg["MtimeTickPeriodType"].as<uint32_t>();
   m_Interleave            = CLINT_cfg["Interleave"].as<uint64_t>();
   
-  DPRINTFF(CLINT, "BaseCLINT constructor: m_MtimeTickPeriodType {}", m_MtimeTickPeriodType);
+//   DPRINTFF(CLINT, "BaseCLINT constructor: m_MtimeTickPeriodType {}", m_MtimeTickPeriodType);
   //
   m_MtimeTickPeriod = 1;
   m_LastMinstret.resize(m_ThreadCnt, 0);
@@ -151,8 +151,8 @@ void BaseCLINT::Tick(){
         //take interrupt or clear the csr MTIP
         if(!((m_CsrRegMtime+1)%m_Interleave)){
             if(m_CsrRegMtime >= m_CsrRegMtimecmp[tid]){
-            DPRINTFF(CLINT, "BaseCLINT Tick:{}  mtimecmp {}",
-                m_CsrRegMtime, m_CsrRegMtimecmp[tid]);
+            // DPRINTFF(CLINT, "BaseCLINT Tick:{}  mtimecmp {}",
+                // m_CsrRegMtime, m_CsrRegMtimecmp[tid]);
                 CsrMipVal = CsrMipVal|XMIP_MTIP;
             }else{
                 CsrMipVal = CsrMipVal&(~XMIP_MTIP);
